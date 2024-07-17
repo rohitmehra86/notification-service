@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "cad65539-1044-45b0-a278-7ec075dce3e7",
+		"name": "Paxaris-Email",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Send email with Template",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"to\":\"satnamsinghubhi@gmail.com\",\r\n\t\"subject\":\"Email API testing\",\r\n\t\"template\":\"WelcomeOnboardUser\",\r\n    \"templateModel\":{\"username\":\"Adv. Navjot Singh Khangura\"},\r\n\t\"from\":\"satnam.singh.lims@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8882/email/api/v1/send-mail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8882",
+					"path": [
+						"email",
+						"api",
+						"v1",
+						"send-mail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send email without template",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"to\": \"satnamsinghubhi@gmail.com\",\r\n    \"from\":\"satnam.singh.lims@gmail.com\",\r\n    \"subject\": \"Test Mail\",\r\n    \"messageBody\": \"Welcome onboard Mr. Rohit\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8882/email/api/v1/send-mail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8882",
+					"path": [
+						"email",
+						"api",
+						"v1",
+						"send-mail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send email - Upload File",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/satnam.singh/Desktop/EmailNotificationRequest.java"
+						},
+						{
+							"key": "dto",
+							"type": "file",
+							"src": "/C:/Users/satnam.singh/Desktop/requestbody.json"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8882/email/api/v1/send-mail-attachment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8882",
+					"path": [
+						"email",
+						"api",
+						"v1",
+						"send-mail-attachment"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,8 @@
+apiVersion : v1
+kind : ConfigMap
+metadata:
+  name : email-db-config
+data:
+  host : email-mysql
+  dbUrl : jdbc:mysql://email-mysql:3306/email?createDatabaseIfNotExist=true
+  dbName: email

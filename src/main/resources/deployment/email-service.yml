@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-service-app
+  labels:
+    app: email-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email-service-app
+  template:
+    metadata:
+      labels:
+        app: email-service-app
+    spec:
+      containers:
+        - name: email-service-app
+          image: devopspaxaris/paxaris-email-service:0.0.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8882
+          env:   # Setting Enviornmental Variables
+            - name: emailMS_DB_URL   # Setting Database host address from configMap
+              valueFrom :
+                configMapKeyRef :
+                  name : email-db-config
+                  key :  dbUrl
+
+            - name: emailMS_DB_USERNAME  # Setting Database username from Secret
+              valueFrom :
+                secretKeyRef :
+                  name : email-mysql-secrets
+                  key :  username
+
+            - name: emailMS_DB_PASSWORD # Setting Database password from Secret
+              valueFrom :
+                secretKeyRef :
+                  name : email-mysql-secrets
+                  key :  password
+                  
+            - name: emailMS_MAIL_USERNAME  # Setting Service config URL
+              value: "devops.paxaris@gmail.com"
+            
+            - name: emailMS_MAIL_PASSWORD  # Setting Service config URL
+              value: "rayfofzmveuehmbm"
+            
+            - name: emailMS_MAIL_PORT  # Setting Service config URL
+              value: "587"
+              
+            - name: EUREKA_SERVER_URL  # Setting Service config URL
+              value: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: email-service-svc
+spec:
+  ports:
+    - targetPort: 8882
+      port: 80
+  selector:
+    app: email-service-app
